@@ -1,0 +1,32 @@
+{
+  "name": "myzap",
+  "version": "1.0.0",
+  "description": "Free OpenSource Whatsapp Api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node index.js"
+  },
+  "author": "Bill Barsch",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.6",
+    "melanke-watchjs": "^1.5.2",
+    "mime": "^2.4.6",
+    "moment": "^2.29.1",
+    "natural": "^2.1.5",
+    "node-cron": "^2.0.3",
+    "on-change": "^2.1.4",
+    "pg": "^8.4.1",
+    "rxjs": "^6.6.3",
+    "socket.io": "^2.3.0",
+    "venom-bot": "^2.2.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
