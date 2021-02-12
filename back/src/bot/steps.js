@@ -240,9 +240,9 @@ export async function step(app, number, message, client) {
    
 
     //buscar na loja
-       let value = await orderValueTotal(app, user.id_service)
       await setStage(app, number, 10)
-      client.sendText(number, `Ok, então você pode retirar com a gente! Assim que estiver pronto te enviaremos uma mensagem e você pode retirar aqui.\nNosso Endereço: R: de André Lourenço N 160\nSeu pedido ficou em ${value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}, como você deseja pagar?\n1- No dinheiro\n2- No cartão?`);     
+      let value = await orderValueTotal(app, user.id_service)
+      client.sendText(number, `Ok, então você pode retirar com a gente! Assim que estiver pronto te enviaremos uma mensagem e você pode retirar aqui.\nNosso Endereço: R: de André Lourenço N 160\nSeu pedido ficou em ${value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}, como você deseja pagar?\n1- No dinheiro\n2- No cartão?\n3- Com PIX?`);     
 
     } else if (resp.sucess && resp.item.code === 2) {
       await newProduct(app, user.id_service, 15, true)//taxa de entrega
@@ -337,7 +337,7 @@ export async function step(app, number, message, client) {
       await setStage(app, number, 100)
       await paymentCredit(app, true, user.id_service)
       await closeOrder(app, user.id_service)
-      client.sendText(number, `Ok, assim que estiver pronto enviaremos seu pedido, vamos te informar quando estiver saindo daqui. Qualquer coisa pode me chamar!`)
+      client.sendText(number, `Ok, assim que estiver pronto enviaremos seu pedido, vamos te informar! Qualquer coisa pode me chamar!`)
     } else if (resp.sucess && resp.item.code === 3) {
       //pix
       await setStage(app, number, 100)

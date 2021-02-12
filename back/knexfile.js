@@ -1,9 +1,11 @@
 // Update with your config settings.
-
+require('dotenv').config({  
+    path: process.env.NODE_ENV === "test" ? ".env.testing" : ".env"
+  })
 module.exports = {
     client: 'postgresql',
     connection: {
-        host : 'localhost',
+        host : process.env.DB_HOST,
         port: 5432,
         database: 'postgres',
         user: 'dbwoner',

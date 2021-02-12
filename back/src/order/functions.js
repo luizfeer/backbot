@@ -106,15 +106,18 @@ export async function getOrderValue(app, id_service) {
     try {
        
         let total = await app.db.raw(
-            `select 
-            (SELECT SUM(p.price)       
-            FROM service_products AS sp
-            LEFT JOIN product AS p ON p.id_product = sp.id_product 
-            WHERE sp.status = true
-            and sp.id_service  = '${id_service}') + (SELECT sum(price)            
-            FROM service_additional sa 
-            LEFT JOIN additional a2 ON a2.id_additional = sa.id_additional
-            WHERE sa.id_service = '${id_service}') AS total
+            `
+            select  
+                (SELECT COALESCE((SELECT SUM(p.price)       
+                FROM service_products AS sp
+                LEFT JOIN product AS p ON p.id_product = sp.id_product 
+                WHERE sp.status = true
+                and sp.id_service  = '${id_service}'),0))
+            + (SELECT COALESCE((SELECT sum(price)            
+                FROM service_additional sa 
+                left JOIN additional a2 ON a2.id_additional = sa.id_additional
+                WHERE sa.id_service = '${id_service}'), 0))
+            as total          
             `)
         return { message: 'total', sucess: true, data: total };
     } catch (msg) {

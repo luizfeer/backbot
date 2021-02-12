@@ -8,15 +8,18 @@ export async function getStatements(req, res){
             u.name, u.phone,
             s.id_service, s.created_at, s.stage_service, s.id_address_service, s.finished, s.closed, s.recived, s.producing, s.sending, s.updated_at as service_updated_at, s.payment_card, s.payment_pix, s.change,
             TO_CHAR(s.updated_at, 'DD/MM/YYYY HH:MM:SS') as time_br,
-            a.address, (select 
-                (SELECT SUM(p.price)       
+            a.address, 
+            (select  
+                (SELECT COALESCE((SELECT SUM(p.price)       
                 FROM service_products AS sp
                 LEFT JOIN product AS p ON p.id_product = sp.id_product 
                 WHERE sp.status = true
-                and sp.id_service  = s.id_service) + (SELECT sum(price)            
+                and sp.id_service  = s.id_service),0))
+            + (SELECT COALESCE((SELECT sum(price)            
                 FROM service_additional sa 
-                LEFT JOIN additional a2 ON a2.id_additional = sa.id_additional
-                WHERE sa.id_service = s.id_service) AS total)
+                left JOIN additional a2 ON a2.id_additional = sa.id_additional
+                WHERE sa.id_service = s.id_service), 0))
+            as total)
         FROM "user" AS u
         LEFT JOIN "service" AS s ON s.id_user_service = u.id_user            
         LEFT JOIN "address" AS a ON a.id_user_address = u.id_user
