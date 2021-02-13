@@ -190,11 +190,22 @@ export async function additionalMenu(app, id_service) {
 export async function menuFormated(app){
   let products = await getMenu(app)
   products = products.data
-  // console.log(products)
   let msg = "🚨  CARDÁPIO  🚨\n\n"  
   Object.keys(products).map(value => {
-    // if (value === '1') {
-    //   msg += `1️⃣ - _${products[value].name}_ \n`
+    console.log(products[value].code)
+    if (products[value].code === '301') {
+      msg += `🧃 Bebidas\n`
+    }
+    if (products[value].code === '400') {
+      msg += `\n🍗 Frango Frito\n`
+    }
+    if (products[value].code === '410') {
+      msg += `\n🍟 Batata Frita\n`
+    }
+    if (products[value].code === '420') {
+      msg += `\n🍮 Sobremesas\n`
+    }
+    
     // } else if (value === '2') {
     //   msg += `2️⃣ - _${products[value].name}_ \n`
     // } else if (value === '3') {
@@ -204,9 +215,9 @@ export async function menuFormated(app){
     // } else if (value === '5') {
       // }
       // msg += `*${products[value].code}* - ${products[value].name} \n`
-      msg += `*${products[value].code}* - ${products[value].name} \n`
+      msg += `  *${products[value].code}* - ${products[value].name} \n`
   });
-  msg += `\n- Envie o código ou nome do produto que deseja pedir!\n`
+  msg += `\n- Envie o código ou nome do produto que deseja pedir!\n\`\`\`E somente um pedido por vez\`\`\``
   return msg
 } 
 

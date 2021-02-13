@@ -8,9 +8,8 @@ module.exports = {
         host : process.env.DB_HOST,
         port: 5432,
         database: 'postgres',
-        user: 'dbwoner',
-        password: '2conrinTIOS4'
-
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS
     },
     pool: {
         min: 2,

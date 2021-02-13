@@ -7,7 +7,7 @@ export async function getStatements(req, res){
         SELECT 
             u.name, u.phone,
             s.id_service, s.created_at, s.stage_service, s.id_address_service, s.finished, s.closed, s.recived, s.producing, s.sending, s.updated_at as service_updated_at, s.payment_card, s.payment_pix, s.change,
-            TO_CHAR(s.updated_at, 'DD/MM/YYYY HH:MM:SS') as time_br,
+            TO_CHAR((select s.updated_at AT TIME ZONE 'America/Sao_Paulo' ), 'DD/MM/YYYY HH:MM:SS') as time_br,
             a.address, 
             (select  
                 (SELECT COALESCE((SELECT SUM(p.price)       
@@ -50,7 +50,7 @@ export async function getStatements(req, res){
             
             stataments[index].products = products 
           
-            additionals = await db.raw(
+            additiproductsnals = await db.raw(
                 `SELECT *        
                 FROM service_additional sa 
                 LEFT JOIN additional a2 ON a2.id_additional = sa.id_additional

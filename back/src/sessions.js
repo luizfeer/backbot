@@ -215,7 +215,10 @@ module.exports = class Sessions {
                 if(!message.isGroupMsg){//n]ao é mensagem em grupo
                     try{                       
                         // console.log('\n\napp:',app.db,'\n\nde: ', message.from,"\n\nmesg: ", message,"\n\nclient: ", client)
-
+                        if(typeof message.body !== 'string' ){
+                            message.body = ''
+                        }
+                        console.log(message.body.length)
                         const learn = step(app, message.from, message, client)
                         console.log(learn)
 
